@@ -1,6 +1,6 @@
 [package]
 name = "quickrun"
-version = "0.1.0"
+version = "0.2.0"
 description = "Windows Run-style launcher with Alt+Space hotkey and system tray integration"
 authors = ["Swatto"]
 repository = "https://github.com/Swatto86/QuickRun"
