@@ -1,0 +1,28 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background -->
+  <rect width="512" height="512" rx="64" fill="#1e1e1e"/>
+  
+  <!-- Lightning bolt (representing quick/fast) -->
+  <path d="M 280 100 L 160 280 L 240 280 L 200 412 L 360 220 L 280 220 Z" 
+        fill="#0078d4" 
+        stroke="#ffffff" 
+        stroke-width="8" 
+        stroke-linejoin="round"/>
+  
+  <!-- Search magnifying glass -->
+  <circle cx="140" cy="140" r="45" 
+          fill="none" 
+          stroke="#00d4aa" 
+          stroke-width="12"/>
+  <line x1="175" y1="175" x2="210" y2="210" 
+        stroke="#00d4aa" 
+        stroke-width="12" 
+        stroke-linecap="round"/>
+  
+  <!-- Terminal/Command prompt indicator (small) -->
+  <text x="380" y="450" 
+        font-family="Consolas, monospace" 
+        font-size="80" 
+        fill="#00d4aa" 
+        font-weight="bold">></text>
+</svg>

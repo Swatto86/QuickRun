@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickRun Settings</title>
+    <style>
+        /* Prevent white flash - apply dark background immediately */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+    </style>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script type="module" src="/src/settings.ts" defer></script>
+</head>
+
+<body>
+    <div class="settings-container">
+        <h2>QuickRun Settings</h2>
+
+        <div class="setting-item">
+            <label>
+                <input type="checkbox" id="startup-checkbox" />
+                Start with Windows
+            </label>
+            <p class="setting-description">Launch QuickRun automatically when Windows starts</p>
+        </div>
+
+        <div class="setting-item">
+            <label>
+                <input type="checkbox" id="light-mode-checkbox" />
+                Light Mode
+            </label>
+            <p class="setting-description">Use light theme instead of dark</p>
+        </div>
+
+        <div class="settings-actions">
+            <button id="close-button">Close</button>
+        </div>
+    </div>
+</body>
+
+</html>

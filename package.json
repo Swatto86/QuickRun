@@ -1,0 +1,28 @@
+{
+  "name": "quickrun",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Windows Run-style launcher with Alt+Space hotkey and system tray integration",
+  "author": "Swatto",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Swatto86/QuickRun"
+  },
+  "homepage": "https://github.com/Swatto86/QuickRun",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-opener": "^2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "vite": "^6.0.3",
+    "typescript": "~5.6.2"
+  }
+}

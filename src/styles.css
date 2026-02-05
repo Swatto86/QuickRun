@@ -1,0 +1,174 @@
+/* styles.css - QuickRun launcher styles with Light/Dark theme support */
+
+:root[data-theme="dark"] {
+  --bg-primary: #1e1e1e;
+  --bg-input: #2d2d30;
+  --bg-error: #3e2a1e;
+  --text-primary: #e0e0e0;
+  --text-error: #f4a460;
+  --border: #3e3e42;
+  --border-focus: #007acc;
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #f5f5f5;
+  --bg-input: #ffffff;
+  --bg-error: #fff4e5;
+  --text-primary: #1e1e1e;
+  --text-error: #d87800;
+  --border: #cccccc;
+  --border-focus: #007acc;
+}
+
+/* Default to dark theme */
+:root {
+  --bg-primary: #1e1e1e;
+  --bg-input: #2d2d30;
+  --bg-error: #3e2a1e;
+  --text-primary: #e0e0e0;
+  --text-error: #f4a460;
+  --border: #3e3e42;
+  --border-focus: #007acc;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+}
+
+.launcher-container {
+  padding: 16px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+}
+
+#command-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 18px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+#command-input:focus {
+  border-color: var(--border-focus);
+}
+
+#command-input::placeholder {
+  color: #858585;
+}
+
+#error-message {
+  margin-top: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.error-visible {
+  opacity: 1;
+  padding: 8px 12px;
+  background-color: var(--bg-error);
+  border: 1px solid var(--border);
+  color: var(--text-error);
+  display: block;
+}
+
+.error-hidden {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  display: none;
+}
+
+/* Settings Window Styles */
+.settings-container {
+  padding: 24px;
+  max-width: 500px;
+}
+
+.settings-container h2 {
+  margin: 0 0 24px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.setting-item {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #3e3e42;
+}
+
+.setting-item:last-of-type {
+  border-bottom: none;
+}
+
+.setting-item label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.setting-item input[type="checkbox"] {
+  margin-right: 12px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.setting-description {
+  margin: 8px 0 0 30px;
+  font-size: 13px;
+  color: #858585;
+}
+
+.settings-actions {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.settings-actions button {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #0078d4;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.settings-actions button:hover {
+  background-color: #106ebe;
+}
+
+.settings-actions button:active {
+  background-color: #005a9e;
+}
