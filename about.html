@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About QuickRun</title>
+    <style>
+        /* Prevent white flash - apply dark background immediately */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+    </style>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script type="module" src="/src/about.ts" defer></script>
+</head>
+
+<body>
+    <div class="about-container">
+        <div class="about-header">
+            <img src="/icons/128x128@2x.png" alt="QuickRun Icon" class="about-icon">
+            <h1 class="about-title">QuickRun</h1>
+            <p class="about-version" id="about-version">v0.1.0</p>
+        </div>
+
+        <div class="about-section">
+            <p class="about-description">Windows Run-style launcher with Alt+Space hotkey and system tray integration.
+            </p>
+        </div>
+
+        <div class="about-section">
+            <h2>Features</h2>
+            <ul>
+                <li>Global Alt+Space hotkey</li>
+                <li>PATH resolution for commands</li>
+                <li>System tray integration</li>
+                <li>Light & Dark themes</li>
+                <li>Start with Windows</li>
+            </ul>
+        </div>
+
+        <div class="about-section">
+            <h2>Developer</h2>
+            <p>Swatto</p>
+            <p><a href="https://github.com/Swatto86/QuickRun" target="_blank" class="about-link">GitHub Repository</a>
+            </p>
+        </div>
+
+        <div class="about-section">
+            <h2>Updates</h2>
+            <button id="check-updates-btn" class="update-btn">
+                <span class="btn-text">Check for Updates</span>
+                <span class="loading loading-spinner loading-sm hidden"></span>
+            </button>
+            <p id="update-status" class="update-status"></p>
+        </div>
+
+        <div class="about-actions">
+            <button id="close-btn" class="btn-primary">Close</button>
+        </div>
+    </div>
+</body>
+
+</html>

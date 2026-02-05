@@ -6,6 +6,7 @@
 // - Window management (show/hide, center on active monitor, focus)
 // - Command execution (via the runner module)
 // - Settings persistence (Windows registry for startup, JSON for theme)
+// - Auto-update functionality (checks GitHub releases)
 //
 // Architecture:
 // - Tauri is a framework that combines a Rust backend with a web frontend
@@ -14,6 +15,7 @@
 // - Communication happens via Tauri "commands" (Rust functions callable from JS)
 
 mod runner;
+mod updater;
 
 use std::path::PathBuf;
 use tauri::{AppHandle, Emitter, Manager, Runtime, WebviewWindow, WebviewWindowBuilder};
@@ -178,6 +180,38 @@ fn set_light_mode(enabled: bool) -> Result<(), String> {
     save_setting("light_mode", enabled)
 }
 
+/// Check for available updates from GitHub releases
+/// 
+/// Queries the GitHub API to check if a newer version is available.
+/// Returns update information including version, release notes, and installer URL.
+/// 
+/// Called from the About/Settings window when user clicks "Check for Updates"
+#[tauri::command]
+async fn check_for_update() -> Result<updater::UpdateInfo, String> {
+    updater::check_for_update_impl().await
+}
+
+/// Download and install an update
+/// 
+/// Downloads the installer to the temp directory and launches it.
+/// The application should exit after calling this to allow the installer to run.
+/// 
+/// Parameters:
+/// - update_info: Information about the update to install
+#[tauri::command]
+async fn download_and_install_update(update_info: updater::UpdateInfo) -> Result<(), String> {
+    updater::download_and_install_impl(update_info).await
+}
+
+/// Tauri command: Get the current application version
+/// 
+/// Returns the version number from Cargo.toml (e.g., "1.0.0")
+/// This is displayed in the About window
+#[tauri::command]
+fn get_app_version() -> String {
+    env!("CARGO_PKG_VERSION").to_string()
+}
+
 /// Tauri command: run a command from user input
 /// 
 /// This is the core function that executes user commands.
@@ -300,6 +334,39 @@ fn open_settings<R: Runtime>(app: &AppHandle<R>) {
     .build();
 }
 
+/// Open the about window (or show it if already open)
+/// 
+/// About window features:
+/// - Shows app version, description, and features
+/// - Check for updates functionality
+/// - Links to GitHub repository
+/// - Transparent background (consistent with other windows)
+/// - Singleton pattern: only one about window at a time
+/// 
+/// Called when:
+/// - User clicks \"About\" in system tray menu
+fn open_about<R: Runtime>(app: &AppHandle<R>) {
+    // Check if about window already exists (singleton pattern)
+    if let Some(about_window) = app.get_webview_window("about") {
+        let _ = about_window.show();
+        let _ = about_window.set_focus();
+        return;
+    }
+    
+    // Create a new about window
+    let _about_window = WebviewWindowBuilder::new(
+        app,
+        "about",
+        tauri::WebviewUrl::App("about.html".into()),
+    )
+    .title("About QuickRun")
+    .inner_size(500.0, 580.0)
+    .resizable(false)
+    .transparent(true)
+    .center()
+    .build();
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -308,11 +375,13 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .setup(|app| {
             // Build the system tray menu
+            let about_item = MenuItemBuilder::with_id("about", "About").build(app)?;
             let settings_item = MenuItemBuilder::with_id("settings", "Settings").build(app)?;
             let quit_item = MenuItemBuilder::with_id("quit", "Quit").build(app)?;
             
             let menu = MenuBuilder::new(app)
                 .item(&settings_item)
+                .item(&about_item)
                 .separator()
                 .item(&quit_item)
                 .build()?;
@@ -328,6 +397,7 @@ pub fn run() {
                 .show_menu_on_left_click(false)
                 .on_menu_event(|app, event| {
                     match event.id().as_ref() {
+                        "about" => open_about(app),
                         "settings" => open_settings(app),
                         "quit" => app.exit(0),
                         _ => {}
@@ -376,7 +446,10 @@ pub fn run() {
             is_startup_enabled,
             set_startup_enabled,
             is_light_mode,
-            set_light_mode
+            set_light_mode,
+            check_for_update,
+            download_and_install_update,
+            get_app_version
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
